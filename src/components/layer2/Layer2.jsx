@@ -2,18 +2,22 @@ import { useEffect, useRef, useState } from 'react';
 import { Field } from './Layer2.styled';
 import { Card } from 'components/card/card';
 
-export const Layer2 = ({ getCards, pickPair, deleteCards, pair, clearPair }) => {
+export const Layer2 = ({ getCards, pickPair, deleteCards, pair, clearPair, getCardsFromLayer, allCards }) => {
   const [cards, setCards] = useState([]);
   const [isPair, setIsPair] = useState(false);
   const layer2Ref = useRef();
 
-//   const errorBorder = (ref) => {
-//     console.log(ref);
-// }
   useEffect(() => {
-    setCards(getCards(layer2Ref));
+    setCards(getCards(layer2Ref, 2));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  useEffect(() => {
+    if(cards.length ===0) {
+      return;
+    }
+    getCardsFromLayer(2, cards);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cards])
   useEffect(() => {
     if (pair.length !== 2) {
       setIsPair(false);
@@ -42,6 +46,8 @@ export const Layer2 = ({ getCards, pickPair, deleteCards, pair, clearPair }) => 
                 pickPair={pickPair}
                 isPair={isPair}
                 pos={card.position}
+                layer={card.layer}
+                allCards={allCards}
               />
             );
           }

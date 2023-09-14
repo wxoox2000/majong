@@ -18,6 +18,17 @@ function error(p) {
   }
 }
 
+function allow(p) {
+  switch (p.$allow) {
+    case true:
+      return 'pointer-events: all;'
+    case false:
+      return `pointer-events: none; filter: grayscale(0.4);`
+    default:
+      break;
+  }
+}
+
 export const MojangCard = styled.div.attrs(p =>({
   style: {
     top: p.$pos.top,
@@ -28,7 +39,8 @@ position: absolute;
   width: 50px;
   height: 100px;
   border-radius: 10px;
-
+  /* pointer-events: all; */
+  ${allow}
   ${choosed}
   ${error}
   background-color: ${p => p.$color};

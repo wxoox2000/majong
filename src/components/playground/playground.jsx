@@ -6,6 +6,7 @@ import { useState } from 'react';
 
 export const Playground = () => {
   const [pair, setPair] = useState([]);
+  const [allCards, setAllCards] = useState([]);
   // const [isPair, setIsPair] = useState(false);
   function getRandomColor() {
     const num = Math.floor(Math.random() * 12);
@@ -80,7 +81,17 @@ export const Playground = () => {
     }
     return arr;
   };
-  const getCards = ref => {
+  const getCardsFromLayer = (layer, cardsArr) => {
+    if (allCards.length === 0) {
+      setAllCards(cards => [...cards, { layer, cardsArr }]);
+      return;
+    }
+    console.log(layer);
+    const allCardsFilter = allCards.filter(item => item.layer !== layer);
+    console.log(allCardsFilter);
+    setAllCards([...allCardsFilter, { layer, cardsArr }]);
+  };
+  const getCards = (ref, layer) => {
     const width = ref.current.getBoundingClientRect().width;
     const height = ref.current.getBoundingClientRect().height;
     const cardAmount = ((width / 50) * height) / 100;
@@ -88,19 +99,20 @@ export const Playground = () => {
     let row = 0;
     let col = -1;
     for (let i = 0; i < cardAmount; i++) {
-      if(i % Number((width / 50).toFixed(0)) ===0 && i !==0){
-        row +=1;
+      if (i % Number((width / 50).toFixed(0)) === 0 && i !== 0) {
+        row += 1;
         col = -1;
       }
-      col +=1;
+      col += 1;
       const card = {
         number: i,
         color: getRandomColor(),
         id: nanoid(),
+        layer,
         position: {
-          top: `${row *100}px`, 
-          left: `${col *50}px`,
-        }
+          top: `${row * 100}px`,
+          left: `${col * 50}px`,
+        },
       };
       cardArray.push(card);
     }
@@ -108,11 +120,10 @@ export const Playground = () => {
     return adjusted;
   };
   const pickPair = (color, id) => {
-    if (pair.length ===0) {
+    if (pair.length === 0) {
       setPair([{ color, id }]);
-    }
-    else if(pair.length ===1) {
-      if(pair[0].id === id){
+    } else if (pair.length === 1) {
+      if (pair[0].id === id) {
         clearPair();
         return;
       }
@@ -121,17 +132,16 @@ export const Playground = () => {
   };
   const clearPair = () => {
     setPair([]);
-  }
+  };
   const deleteCards = (pair, cards) => {
     const filterCadrs = [];
     for (let j = 0; j < cards.length; j++) {
       if (cards[j].id !== pair[0].id && cards[j].id !== pair[1].id) {
         filterCadrs.push(cards[j]);
       }
-      continue
+      continue;
     }
-    clearPair()
-    console.log(filterCadrs);
+    clearPair();
     return filterCadrs;
   };
 
@@ -143,6 +153,8 @@ export const Playground = () => {
         pair={pair}
         deleteCards={deleteCards}
         clearPair={clearPair}
+        getCardsFromLayer={getCardsFromLayer}
+        allCards={allCards}
       />
       <Layer2
         getCards={getCards}
@@ -150,6 +162,8 @@ export const Playground = () => {
         pair={pair}
         deleteCards={deleteCards}
         clearPair={clearPair}
+        getCardsFromLayer={getCardsFromLayer}
+        allCards={allCards}
       />
     </Playfield>
   );

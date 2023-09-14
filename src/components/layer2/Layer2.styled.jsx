@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const Field = styled.div`
+pointer-events: none;
   position: absolute;
   top: 50px;
   left: 25px;
