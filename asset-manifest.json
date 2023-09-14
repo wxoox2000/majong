@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/majong/static/css/main.5d4c55a7.css",
-    "main.js": "/majong/static/js/main.63f44cd0.js",
+    "main.js": "/majong/static/js/main.0a1be46d.js",
     "index.html": "/majong/index.html",
     "main.5d4c55a7.css.map": "/majong/static/css/main.5d4c55a7.css.map",
-    "main.63f44cd0.js.map": "/majong/static/js/main.63f44cd0.js.map"
+    "main.0a1be46d.js.map": "/majong/static/js/main.0a1be46d.js.map"
   },
   "entrypoints": [
     "static/css/main.5d4c55a7.css",
-    "static/js/main.63f44cd0.js"
+    "static/js/main.0a1be46d.js"
   ]
 }
