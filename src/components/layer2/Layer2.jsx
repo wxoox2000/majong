@@ -2,9 +2,10 @@ import { useEffect, useRef, useState } from 'react';
 import { Field } from './Layer2.styled';
 import { Card } from 'components/card/card';
 
-export const Layer2 = ({ getCards, pickPair, deleteCards, pair, clearPair, getCardsFromLayer, allCards }) => {
+export const Layer2 = ({ getCards, pickPair, deleteCards, pair, clearPair, getCardsFromLayer, allCards, render }) => {
   const [cards, setCards] = useState([]);
   const [isPair, setIsPair] = useState(false);
+  const [mount, setMount] = useState(null);
   const layer2Ref = useRef();
 
   useEffect(() => {
@@ -12,8 +13,18 @@ export const Layer2 = ({ getCards, pickPair, deleteCards, pair, clearPair, getCa
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
-    if(cards.length ===0) {
+    if(cards.length === 172){
+      const deleteLast = cards.filter(({position}) =>position.top !== '900px' );
+      setCards(deleteLast)  ;
+    }
+    if(cards.length ===0 && !mount) {
+      setMount(true)
       return;
+    }
+    else if(cards.length ===0 && mount){
+      getCardsFromLayer(2, ['empty']);
+      render(2)
+      return
     }
     getCardsFromLayer(2, cards);
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -37,7 +48,6 @@ export const Layer2 = ({ getCards, pickPair, deleteCards, pair, clearPair, getCa
     <>
       <Field ref={layer2Ref}>
         {cards.map(card => {
-          if (card.number !== 171) {
             return (
               <Card
                 id={card.id}
@@ -50,8 +60,6 @@ export const Layer2 = ({ getCards, pickPair, deleteCards, pair, clearPair, getCa
                 allCards={allCards}
               />
             );
-          }
-          return null;
         })}
       </Field>
     </>

@@ -2,11 +2,15 @@ import { Layer1 } from 'components/layer1/Layer1';
 import { Playfield } from './playground.styled';
 import { nanoid } from 'nanoid';
 import { Layer2 } from 'components/layer2/Layer2';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Layer3 } from 'components/Layer3/Layer3';
 
 export const Playground = () => {
   const [pair, setPair] = useState([]);
   const [allCards, setAllCards] = useState([]);
+  const [layer1, setLayer1] = useState(true);
+  const [layer2, setLayer2] = useState(true);
+  const [layer3, setLayer3] = useState(true);
   // const [isPair, setIsPair] = useState(false);
   function getRandomColor() {
     const num = Math.floor(Math.random() * 12);
@@ -89,21 +93,44 @@ export const Playground = () => {
     console.log(layer);
     const allCardsFilter = allCards.filter(item => item.layer !== layer);
     console.log(allCardsFilter);
+    if (cardsArr[0] === 'empty') {
+      setAllCards([...allCardsFilter]);
+      return;
+    }
     setAllCards([...allCardsFilter, { layer, cardsArr }]);
   };
   const getCards = (ref, layer) => {
     const width = ref.current.getBoundingClientRect().width;
     const height = ref.current.getBoundingClientRect().height;
     const cardAmount = ((width / 50) * height) / 100;
+    console.log(cardAmount);
     let cardArray = [];
     let row = 0;
     let col = -1;
-    for (let i = 0; i < cardAmount; i++) {
+    for (let i = 0; i <= cardAmount; i++) {
       if (i % Number((width / 50).toFixed(0)) === 0 && i !== 0) {
         row += 1;
         col = -1;
       }
       col += 1;
+      let topShift = 0;
+      let leftShift = 0;
+      switch (layer) {
+        case 1:
+          topShift = 50;
+          leftShift = 25;
+          break;
+        case 2:
+          topShift = 50;
+          leftShift = 25;
+          break;
+        case 3:
+          topShift = 50;
+          leftShift = 25;
+          break;
+        default:
+          break;
+      }
       const card = {
         number: i,
         color: getRandomColor(),
@@ -112,6 +139,10 @@ export const Playground = () => {
         position: {
           top: `${row * 100}px`,
           left: `${col * 50}px`,
+        },
+        positionToCalc: {
+          top: `${row * 100 + topShift}px`,
+          left: `${col * 50 + leftShift}px`,
         },
       };
       cardArray.push(card);
@@ -144,27 +175,64 @@ export const Playground = () => {
     clearPair();
     return filterCadrs;
   };
+  const renderLayers = layer => {
+    switch (layer) {
+      case 1:
+        setLayer1(false);
+        break;
+      case 2:
+        setLayer2(false);
+        break;
+      case 3:
+        setLayer3(false);
+        break;
+
+      default:
+        break;
+    }
+  };
+  useEffect(() => {
+    console.log(allCards);
+  }, [allCards]);
 
   return (
     <Playfield>
-      <Layer1
-        getCards={getCards}
-        pickPair={pickPair}
-        pair={pair}
-        deleteCards={deleteCards}
-        clearPair={clearPair}
-        getCardsFromLayer={getCardsFromLayer}
-        allCards={allCards}
-      />
-      <Layer2
-        getCards={getCards}
-        pickPair={pickPair}
-        pair={pair}
-        deleteCards={deleteCards}
-        clearPair={clearPair}
-        getCardsFromLayer={getCardsFromLayer}
-        allCards={allCards}
-      />
+      {layer1 && (
+        <Layer1
+          getCards={getCards}
+          pickPair={pickPair}
+          pair={pair}
+          deleteCards={deleteCards}
+          clearPair={clearPair}
+          getCardsFromLayer={getCardsFromLayer}
+          allCards={allCards}
+          render={renderLayers}
+        />
+      )}
+      {layer2 && (
+        <Layer2
+          getCards={getCards}
+          pickPair={pickPair}
+          pair={pair}
+          deleteCards={deleteCards}
+          clearPair={clearPair}
+          getCardsFromLayer={getCardsFromLayer}
+          allCards={allCards}
+          render={renderLayers}
+        />
+      )}
+      {layer3 && (
+        <Layer3
+          getCards={getCards}
+          pickPair={pickPair}
+          pair={pair}
+          deleteCards={deleteCards}
+          clearPair={clearPair}
+          getCardsFromLayer={getCardsFromLayer}
+          allCards={allCards}
+          render={renderLayers}
+        />
+      )}
     </Playfield>
   );
 };

@@ -1,15 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
-import { Field } from './Layer1.styled';
+import { Field } from './Layer3.styled';
 import { Card } from 'components/card/card';
 
-export const Layer1 = ({ getCards, pickPair, deleteCards, pair, clearPair, getCardsFromLayer, allCards, render }) => {
+export const Layer3 = ({ getCards, pickPair, deleteCards, pair, clearPair, getCardsFromLayer, allCards, render }) => {
   const [cards, setCards] = useState([]);
   const [isPair, setIsPair] = useState(false);
   const [mount, setMount] = useState(null);
-  const layer1Ref = useRef();
-
+  const layer3Ref = useRef();
   useEffect(() => {
-    setCards(getCards(layer1Ref, 1));
+    setCards(getCards(layer3Ref, 3));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
@@ -19,24 +18,13 @@ export const Layer1 = ({ getCards, pickPair, deleteCards, pair, clearPair, getCa
       return;
     }
     else if(cards.length ===0 && mount){
-      getCardsFromLayer(1, ['empty']);
-      render(1)
+      getCardsFromLayer(3, ['empty']);
+      render(3)
       return
     }
-    getCardsFromLayer(1, cards);
+    getCardsFromLayer(3, cards);
         // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cards])
-
-  // old effect 
-  // useEffect(() => {
-  //   if(cards.length ===0) {
-  //     getCardsFromLayer(1, cards);
-  //     return;
-  //   }
-  //   getCardsFromLayer(1, cards);
-  //       // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [cards])
-  
   useEffect(() => {
     if (pair.length !== 2) {
       setIsPair(false);
@@ -49,27 +37,25 @@ export const Layer1 = ({ getCards, pickPair, deleteCards, pair, clearPair, getCa
 
       return;
     }
-    setTimeout(() => {
-      setCards(deleteCards(pair, cards));
-    }, 100)
+    setCards(deleteCards(pair, cards));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pair]);
   return (
     <>
-      <Field ref={layer1Ref}>
+      <Field ref={layer3Ref}>
         {cards.map(card => {
-          return (
-            <Card
-            id={card.id}
-            key={card.id}
-            color={card.color}
-            pickPair={pickPair}
-            isPair={isPair}
-            pos={card.position}
-            layer={card.layer}
-            allCards={allCards}
-            />
-          );
+            return (
+              <Card
+                id={card.id}
+                key={card.id}
+                color={card.color}
+                pickPair={pickPair}
+                isPair={isPair}
+                pos={card.position}
+                layer={card.layer}
+                allCards={allCards}
+              />
+            );
         })}
       </Field>
     </>
