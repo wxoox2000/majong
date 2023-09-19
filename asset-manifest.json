@@ -1,13 +1,17 @@
 {
   "files": {
     "main.css": "/majong/static/css/main.5d4c55a7.css",
-    "main.js": "/majong/static/js/main.d1c7f986.js",
+    "main.js": "/majong/static/js/main.c30aff75.js",
+    "static/media/old-art.png": "/majong/static/media/old-art.fc75858f7fa9587fbd73.png",
+    "static/media/lakeside.png": "/majong/static/media/lakeside.9f278b37977837fb9d8f.png",
+    "static/media/fuji-dark.png": "/majong/static/media/fuji-dark.9ea6ae269e47f10aad2e.png",
+    "static/media/sprite-reg.svg": "/majong/static/media/sprite-reg.bb88fc3057e2f957f4aa85935429556e.svg",
     "index.html": "/majong/index.html",
     "main.5d4c55a7.css.map": "/majong/static/css/main.5d4c55a7.css.map",
-    "main.d1c7f986.js.map": "/majong/static/js/main.d1c7f986.js.map"
+    "main.c30aff75.js.map": "/majong/static/js/main.c30aff75.js.map"
   },
   "entrypoints": [
     "static/css/main.5d4c55a7.css",
-    "static/js/main.d1c7f986.js"
+    "static/js/main.c30aff75.js"
   ]
 }
