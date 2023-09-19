@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { MojangCard } from './card.styled';
+import regSprite from "../../assets/sprite-reg.svg";
 
 export const Card = ({
   color,
@@ -87,12 +88,15 @@ useEffect(() => {
     <MojangCard
       ref={cardRef}
       className={clicked && 'choosed'}
-      $color={color}
       onClick={choosedCard}
       $choosed={clicked}
       $wrongpair={curPair}
       $pos={pos}
       $allow={allow}
-    ></MojangCard>
+    >
+      <svg className='icon'>
+        <use href={`${regSprite}#${color}`}></use>
+      </svg>
+    </MojangCard>
   );
 };
