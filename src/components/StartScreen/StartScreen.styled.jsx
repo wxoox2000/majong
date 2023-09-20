@@ -11,6 +11,16 @@ const popUp = keyframes`
       transform: scale(1);
     }
 `;
+const popOut = keyframes`
+    0% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(0.1);
+    }
+`;
 
 export const Wrap = styled.div`
   animation: ${popUp} 1000ms cubic-bezier(0.29, 0.43, 0.8, 1.14) 1 normal
@@ -27,7 +37,10 @@ export const Wrap = styled.div`
   justify-content: space-around;
   align-items: center;
   backdrop-filter: blur(15px);
-
+  &.close {
+    animation: ${popOut} 1000ms cubic-bezier(0.29, 0.43, 0.8, 1.14) 1 normal
+      forwards;
+  }
 `;
 
 export const MainBtn = styled(Link)`

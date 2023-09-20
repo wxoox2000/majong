@@ -10,6 +10,7 @@ export const App = () => {
   const savedTheme = localStorage.getItem('Theme');
   const [bg, setBg] = useState(savedTheme ? savedTheme : 'lake');
   const [changeBg, setchangeBg] = useState(false);
+
   const BgColor = theme => {
     if (theme === bg) {
       return;
@@ -21,6 +22,7 @@ export const App = () => {
       setchangeBg(false);
     }, 500);
   };
+
   return (
     <Wrap $bgtheme={bg} className={changeBg ? 'change' : null}>
       <Routes>

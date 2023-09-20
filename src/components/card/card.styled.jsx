@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 function choosed(p) {
   switch (p.$choosed) {
     case false:
@@ -47,14 +48,9 @@ export const MojangCard = styled.div.attrs(p => ({
   ${allow}
   ${choosed}
   ${error}
-  /* background-color: ${p => p.$color}; */
   transform: scale(1);
   transition: transform cubic-bezier(0.29, 0.43, 0.8, 1.14) 300ms,
     border cubic-bezier(0.29, 0.43, 0.8, 1.14) 150ms;
-  /* & .icon {
-    width: 30px;
-    height: 50px;
-  } */
   &:hover {
     transform: scale(1.1);
     z-index: 10;

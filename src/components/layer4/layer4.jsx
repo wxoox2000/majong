@@ -15,7 +15,7 @@ export const Layer4 = ({ getCards, pickPair, deleteCards, pair, clearPair, getCa
   useEffect(() => {
     if(cards.length === 120){
       const deleteLast = cards.filter(({position}) =>position.top !== '700px' );
-      setCards(deleteLast)  ;
+      setCards(deleteLast);
     }
     if(cards.length ===0 && !mount) {
       setMount(true)

@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import { MojangCard } from './card.styled';
-import regSprite from "../../assets/sprite-reg.svg";
 
 export const Card = ({
   color,
@@ -9,14 +8,15 @@ export const Card = ({
   isPair,
   pos,
   layer,
-  allCards
+  allCards,
 }) => {
-  const highestLayer = allCards.map((item) =>item.layer)
-  .sort()[allCards.length - 1];
+  const highestLayer = allCards.map(item => item.layer).sort()[
+    allCards.length - 1
+  ];
   // console.log(highestLayer);
   const [clicked, setClicked] = useState(false);
   const [curPair, setCurPair] = useState(null);
-  const [allow, setAllow] = useState(layer ===highestLayer ? true : false);
+  const [allow, setAllow] = useState(layer === highestLayer ? true : false);
   const cardRef = useRef();
   const choosedCard = () => {
     setClicked(!clicked);
@@ -25,8 +25,8 @@ export const Card = ({
   };
   const allowCardPick = (layer, position) => {
     const getHigherLayers = allCards.filter(item => item.layer > layer);
-    if(getHigherLayers.length === 0) {
-      setAllow(true)
+    if (getHigherLayers.length === 0) {
+      setAllow(true);
       return;
     }
     const left = parseInt(position.left);
@@ -50,24 +50,44 @@ export const Card = ({
       // }
       let entrance = [];
       for (let i = 0; i < arr.length; i++) {
-        if (top <= parseInt(arr[i].positionToCalc.top) && top + 100 >= parseInt(arr[i].positionToCalc.top)) {
-          if (left <= parseInt(arr[i].positionToCalc.left) && left + 50 >= parseInt(arr[i].positionToCalc.left)) {
-           entrance.push(arr[i]);
-         } else if (left >= parseInt(arr[i].positionToCalc.left) && left <= parseInt(arr[i].positionToCalc.left) + 50) {
-           entrance.push(arr[i]);
-         }
-       } else if (top >= parseInt(arr[i].positionToCalc.top) && top <= parseInt(arr[i].positionToCalc.top) + 100) {
-         if (left <= parseInt(arr[i].positionToCalc.left) && left + 50 >= parseInt(arr[i].positionToCalc.left)) {
-           entrance.push(arr[i]);
-         } else if (left >= parseInt(arr[i].positionToCalc.left) && left <= parseInt(arr[i].positionToCalc.left) + 50) {
-           entrance.push(arr[i]);
-         }
-       } 
+        if (
+          top <= parseInt(arr[i].positionToCalc.top) &&
+          top + 100 >= parseInt(arr[i].positionToCalc.top)
+        ) {
+          if (
+            left <= parseInt(arr[i].positionToCalc.left) &&
+            left + 50 >= parseInt(arr[i].positionToCalc.left)
+          ) {
+            entrance.push(arr[i]);
+          } else if (
+            left >= parseInt(arr[i].positionToCalc.left) &&
+            left <= parseInt(arr[i].positionToCalc.left) + 50
+          ) {
+            entrance.push(arr[i]);
+          }
+        } else if (
+          top >= parseInt(arr[i].positionToCalc.top) &&
+          top <= parseInt(arr[i].positionToCalc.top) + 100
+        ) {
+          if (
+            left <= parseInt(arr[i].positionToCalc.left) &&
+            left + 50 >= parseInt(arr[i].positionToCalc.left)
+          ) {
+            entrance.push(arr[i]);
+          } else if (
+            left >= parseInt(arr[i].positionToCalc.left) &&
+            left <= parseInt(arr[i].positionToCalc.left) + 50
+          ) {
+            entrance.push(arr[i]);
+          }
+        }
       }
-      return entrance
+      return entrance;
     };
-    const coverCheck = getHigherLayers.filter(({layer, cardsArr }) => sharedPos(cardsArr, layer).length !== 0);
-    setAllow(coverCheck.length ===0);
+    const coverCheck = getHigherLayers.filter(
+      ({ layer, cardsArr }) => sharedPos(cardsArr, layer).length !== 0
+    );
+    setAllow(coverCheck.length === 0);
   };
   useEffect(() => {
     if (!isPair) {
@@ -79,10 +99,10 @@ export const Card = ({
       setCurPair(null);
     }, 700);
   }, [isPair]);
-useEffect(() => {
-  allowCardPick(layer, pos)
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-}, [allCards])
+  useEffect(() => {
+    allowCardPick(layer, pos);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [allCards]);
 
   return (
     <MojangCard
@@ -94,9 +114,7 @@ useEffect(() => {
       $pos={pos}
       $allow={allow}
     >
-      <svg className='icon'>
-        <use href={`${regSprite}#${color}`}></use>
-      </svg>
+      <img src={`${color}`} alt="" width="50px" />
     </MojangCard>
   );
 };
