@@ -1,8 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import { CloseBtn, Cross, OptTitle, ThemeList, ThemeOpt, ThemeWrap, Wrap } from './Settings.styled';
 import { useEffect, useRef, useState } from 'react';
+import { useTheme } from "components/App";
+
 
 export const Settings = ({ bg }) => {
+  const {theme} = useTheme();
   const [close, setClose] = useState(false);
   const navigate = useNavigate();
   const timerRef = useRef();
@@ -20,9 +23,9 @@ export const Settings = ({ bg }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <Wrap className={close && 'closing'}>
-      <CloseBtn onClick={onClick}>
-        <Cross />
+    <Wrap $cur_theme={theme} className={close && 'closing'}>
+      <CloseBtn $cur_theme={theme} onClick={onClick}>
+        <Cross $cur_theme={theme} />
       </CloseBtn>
       <ThemeWrap>
         <OptTitle>Theme</OptTitle>

@@ -1,19 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import { MojangCard } from './card.styled';
+import { useTheme } from 'components/App';
 
-export const Card = ({
-  color,
-  id,
-  pickPair,
-  isPair,
-  pos,
-  layer,
-  allCards,
-}) => {
+export const Card = ({ color, id, pickPair, isPair, pos, layer, allCards }) => {
   const highestLayer = allCards.map(item => item.layer).sort()[
     allCards.length - 1
   ];
   // console.log(highestLayer);
+  const { theme } = useTheme();
   const [clicked, setClicked] = useState(false);
   const [curPair, setCurPair] = useState(null);
   const [allow, setAllow] = useState(layer === highestLayer ? true : false);
@@ -106,6 +100,7 @@ export const Card = ({
 
   return (
     <MojangCard
+      $cur_theme={theme}
       ref={cardRef}
       className={clicked && 'choosed'}
       onClick={choosedCard}

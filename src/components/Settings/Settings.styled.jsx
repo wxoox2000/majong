@@ -4,7 +4,6 @@ import fuji from '../../assets/themes/fuji-dark.png';
 import lake from '../../assets/themes/lakeside.png';
 import art from '../../assets/themes/old-art.png';
 
-
 const popUp = keyframes`
     0% {
       opacity: 0;
@@ -35,11 +34,11 @@ const popOut = keyframes`
 `;
 const PickTheme = p => {
   switch (p.$opt) {
-    case "fuji":
+    case 'fuji':
       return fuji;
-    case "lake":
+    case 'lake':
       return lake;
-    case "art":
+    case 'art':
       return art;
     default:
       return null;
@@ -54,12 +53,14 @@ export const Wrap = styled.div`
   padding: 50px 15px;
   width: 480px;
   height: 600px;
-
-  opacity: 0;
-  border: 2px solid black;
-  border-radius: 12px;
-  background-color: #179ecf6e;
   backdrop-filter: blur(5px);
+  border-radius: 12px;
+
+  border-top: 3px solid ${p => p.theme[p.$cur_theme].settings.borderTop};
+  border-bottom: 7px solid ${p => p.theme[p.$cur_theme].settings.borderTop};
+  border-right: 3px solid ${p => p.theme[p.$cur_theme].settings.borderLeft};
+  border-left: 3px solid ${p => p.theme[p.$cur_theme].settings.borderLeft};
+  background-image: ${p => p.theme[p.$cur_theme].main.gradient};
   &.closing {
     animation: ${popOut} 700ms ease-in-out 1 normal forwards;
   }
@@ -74,17 +75,17 @@ export const CloseBtn = styled.button`
   width: 30px;
   height: 30px;
   border-radius: 50px;
+  border: none;
 
   display: flex;
   justify-content: center;
   align-items: center;
 
   transform: scale(1);
-  background-color: wheat;
-  transition: background-color ${p => p.theme.tr}, transform ${p => p.theme.tr};
+  background-color: ${p => p.theme[p.$cur_theme].settings.closeBtnColor};
+  transition: transform ${p => p.theme.tr};
   &:hover {
     transform: scale(1.1);
-    background-color: orange;
     & svg {
       fill: black;
     }
@@ -92,7 +93,7 @@ export const CloseBtn = styled.button`
 `;
 
 export const Cross = styled(ImCross)`
-  fill: red;
+  fill: ${p => p.theme[p.$cur_theme].settings.fill};
   transition: fill ${p => p.theme.tr};
 `;
 
@@ -115,7 +116,7 @@ export const ThemeOpt = styled.span`
 
 export const ThemeWrap = styled.div`
   display: flex;
-  gap: 50px;
+  gap: 30px;
   align-items: center;
 `;
 
@@ -126,5 +127,8 @@ export const ThemeList = styled.ul`
 `;
 
 export const OptTitle = styled.h2`
-  font-size: 34px;
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: 3px;
 `;

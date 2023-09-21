@@ -1,12 +1,10 @@
 import styled from 'styled-components';
 
 function choosed(p) {
+  const color = p.theme[p.$cur_theme].cardBorder;
   switch (p.$choosed) {
     case false:
-      return `border-left: 1px solid black;
-            border-bottom: 1px solid black;
-            border-right: 1px solid black;
-            border-top: 1px solid black;`;
+      return `border: 1px solid ${color};`;
     case true:
       return 'border: 5px solid green;';
     default:
@@ -24,7 +22,7 @@ function allow(p) {
     case true:
       return 'pointer-events: all;';
     case false:
-      return `pointer-events: none; filter: grayscale(0.4);  background-color: #787676;`;
+      return `pointer-events: none; filter: grayscale(0.8);  background-color: #787676;`;
     default:
       break;
   }
@@ -44,7 +42,7 @@ export const MojangCard = styled.div.attrs(p => ({
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #fff;
+  background-color: ${p => p.theme[p.$cur_theme].cardBg};
   ${allow}
   ${choosed}
   ${error}
